@@ -9,6 +9,7 @@
 #define FITMETHOD_H_
 #include "point2dprocess.h"
 #include "arraytype.h"
+#include "matrixsolver.h"
 
 namespace std {
 
@@ -29,11 +30,12 @@ public:
 	virtual ~fitmethod();
 public:
 	void 		initFitMethod	(arraytype point_list, uint32 n = 2);
-	void 		startFitMethod	();
+	arraytype	startFitMethod	();
 
 private:
 	FLOAT 		calcSum			(arraytype point_list, uint32 n);
 	FLOAT 		calcSum_b		(arraytype point_list, uint32 n);
+
 	void  		getFitParam_m	();
 	void 		getFitmatrix_b  ();
 	void 		getFitMatrix_m	();

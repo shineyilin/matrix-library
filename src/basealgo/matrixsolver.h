@@ -14,18 +14,20 @@
 namespace std {
 
 /*
- *
+ *jie sheji zhong de yige you xiu de
  */
-class matrixsolver  : public  arraytype {
+class matrixsolver  {
 public:
 	matrixsolver					(	);
-	matrixsolver 					( arraytype A, arraytype B );
+	matrixsolver 					( arraytype  A, arraytype   B );
+	matrixsolver 					( arraytype *A, arraytype *B );
+
 	virtual ~matrixsolver			(	);
 public:
 	arraytype gaussMethod			(	);
 	arraytype inverseMethod			(	);
 	arraytype luMethod				(	);
-	arraytype gaussSidelMethod		( arraytype &X, FLOAT eps	);
+	arraytype gaussSidelMethod		( arraytype &X, FLOAT eps );
 	arraytype jacobianMethod		( arraytype &X, FLOAT eps );
 
 
@@ -33,8 +35,10 @@ public:
 	arraytype tempGaussMethod		(arraytype A, arraytype b );
 	arraytype tempInverseMethod		(arraytype A, arraytype b );
 	arraytype tempLUMethod         	(arraytype A, arraytype b );
-	arraytype tempGaussSideMethod	(arraytype A, arraytype b, arraytype x, FLOAT eps);
-	arraytype tempJacobianMethod  	(arraytype A, arraytype b, arraytype x, FLOAT eps);
+	arraytype tempGaussSideMethod	(arraytype A, arraytype b,
+									 arraytype x, FLOAT eps, uint32 cycle = 10000);
+	arraytype tempJacobianMethod  	(arraytype A, arraytype b,
+									 arraytype x, FLOAT eps, uint32 cycle = 10000);
 
 private:
 	arraytype A;

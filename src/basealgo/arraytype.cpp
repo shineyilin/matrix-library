@@ -245,9 +245,11 @@ arraytype arraytype::operator -(const arraytype& m)
 
 arraytype arraytype::operator *(const arraytype& m)
 {
-	if (m.col_number != this->row_number)
+	//println(m.row_number);
+	//println(this->col_number);
+	if (this->col_number != m.row_number)
 	{
-		println("Error: please check the data again!!!");
+		println("Error: not equal please check the data again!!!");
 		return *this;
 	}
 	arraytype out_arraytype(this->row_number, m.col_number);
@@ -384,7 +386,8 @@ FLOAT	 arraytype::norm( uint32 type  )
 }
 
 
-void 	arraytype::rowCopy(arraytype &aim, arraytype target, uint32 aim_index, uint32 target_index )
+void 	arraytype::rowCopy(arraytype &aim, arraytype target,
+							uint32 aim_index, uint32 target_index )
 {
 	if (aim.col_number != target.col_number )
 	{
@@ -398,14 +401,17 @@ void 	arraytype::rowCopy(arraytype &aim, arraytype target, uint32 aim_index, uin
 }
 
 
-void 	arraytype::colCopy  (arraytype &aim, arraytype target,  uint32 aim_index, uint32 target_index )
+void 	arraytype::colCopy  (arraytype &aim, arraytype target,
+								uint32 aim_index, uint32 target_index )
 {
 	if (aim.row_number != target.row_number )
 	{
 		println("Error: matrix not equal, please check the data again!!!");
 		return;
 	}
-	for (uint32 row = 0; row < aim.col_number; row++)
+	//println(aim_index);
+	//println(target_index);
+	for (uint32 row = 0; row < aim.row_number; row++)
 	{
 		aim.setElement(row,aim_index, target.getElement(row,target_index) );
 	}
@@ -441,11 +447,11 @@ arraytype arraytype::inverse()
 		FLOAT l_value;
 		for (uint32 row = index+1; row<row_number; row++)
 		{
-			l_value = -1*temp_arraytype.getElement(row,index)/\
+			l_value = -1.*temp_arraytype.getElement(row,index)/\
 					  	  	  temp_arraytype.getElement(index,index);
 			//println(l_value);
 			//temp_arraytype.show();
-			for (uint32 col = index; col < col_number; col++)
+			for (uint32 col = 0; col < col_number; col++)
 			{
 				temp_arraytype.setElement(row,col,
 					l_value*temp_arraytype.getElement(index,col)+\
@@ -454,28 +460,36 @@ arraytype arraytype::inverse()
 					l_value*out_arraytype.getElement(index,col)+\
 							out_arraytype.getElement(row,col) );
 			}
-			//out_arraytype.show();
+//			println("temp array:");
+//			temp_arraytype.show();
+//			out_arraytype.show();
 		}
 	}
 
+	//println("temp array:");
+	//temp_arraytype.show();
+	//out_arraytype.show();
 	for(int64 index = row_number-1; index >=0; index--)
 	{
 		FLOAT l_value;
 		for (int64 row = index-1; row >=0; row--)
 		{
-			l_value = -1*temp_arraytype.getElement(row,index)/\
+			l_value = temp_arraytype.getElement(row,index)/\
 				  	  	 temp_arraytype.getElement(index,index);
-			//println(l_value);
-			for(int64 col = index; col >=0; col --)
+//			println(l_value);
+			for(int64 col = row_number-1; col >=0; col --)
 			{
 				temp_arraytype.setElement(row,col,
-					l_value*temp_arraytype.getElement(index,col)+\
+					-l_value*temp_arraytype.getElement(index,col)+\
 							temp_arraytype.getElement(row,col));
 					out_arraytype.setElement(row,col,
-						l_value*out_arraytype.getElement(index,col)+\
+						-l_value*out_arraytype.getElement(index,col)+\
 							out_arraytype.getElement(row,col) );
 				//println(col);
 			}
+//			println("temp array:");
+//			temp_arraytype.show();
+//			out_arraytype.show();
 		}
 	}
 	//out_arraytype.show();
@@ -486,7 +500,7 @@ arraytype arraytype::inverse()
 		factor = 1./temp_arraytype.getElement(index,index);
 		for (uint32 col = 0; col < col_number; col++)
 		{
-			out_arraytype.setElement(index, col, \
+			out_arraytype.setElement(index, col,\
 					factor * out_arraytype.getElement(index,col));
 		}
 	}
@@ -559,6 +573,7 @@ void arraytype::show()
 		}
 		println("");
 	}
+	println("");
 }
 
 

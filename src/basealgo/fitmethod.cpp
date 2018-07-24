@@ -28,6 +28,8 @@ fitmethod::fitmethod(arraytype point_list, uint32 n)
 	this->fit_param_m = new arraytype(1,(col_number - 1)*2 + 1);
 }
 
+
+
 void fitmethod::initFitMethod(arraytype point_list, uint32 n)
 {
 	this->point_list  = point_list;
@@ -74,7 +76,6 @@ void fitmethod::getFitParam_m()
 
 void fitmethod::getFitmatrix_b()
 {
-
 	uint32 row_number = this->fit_matrix_b->getRowNumber();
 	for (uint32 index = 0; index < row_number; index++)
 	{
@@ -94,6 +95,20 @@ void fitmethod::getFitMatrix_m()
 					fit_param_m->getElement(0, col+row)  );
 		}
 	}
+}
+
+arraytype fitmethod::startFitMethod()
+{
+	arraytype fit_param;
+	getFitmatrix_b  ();
+	getFitMatrix_m	();
+	//this->fit_matrix_b->show();
+	//this->fit_matrix->show();
+	//printf("%d\n",this->fit_matrix->getRowNumber());
+	//printf("%d\n",this->fit_matrix->getColNumber() );
+	matrixsolver solver_hand(*this->fit_matrix, *this->fit_matrix_b);
+	fit_param = solver_hand.gaussMethod();
+	return fit_param;
 }
 
 fitmethod::~fitmethod() {
