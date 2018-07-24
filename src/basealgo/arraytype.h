@@ -67,8 +67,6 @@ private:
 	FLOAT 	*item;
 	uint32 	row_number;
 	uint32 	col_number;
-
-
 };
 
 } /* namespace std */

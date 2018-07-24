@@ -10,6 +10,7 @@
 #include <vector>
 #include <iostream>
 
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,7 +60,8 @@ typedef  vector<POINT2D> POINT2D_LIST;
 
 
 #ifndef pi
-#define pi M_PI
+#include <math.h>
+#define pi 3.14159265358979323846
 #endif
 
 
